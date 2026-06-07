@@ -1,4 +1,4 @@
-export const cart = [
+export let cart = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     qty: 2,
@@ -13,7 +13,7 @@ export function addToCart(productId) {
   // Deduplicate products.
   let matchingItem;
   cart.forEach((cartItem) => {
-    if (productId === cartItem.productId) {
+    if (productId === cartItem.id) {
       matchingItem = cartItem;
     }
   });
@@ -26,4 +26,16 @@ export function addToCart(productId) {
       qty: 1,
     });
   }
+}
+
+export function removeFromCart(productId) {
+  const newCart = [];
+
+  cart.forEach((cartItem) => {
+    if (cartItem.id !== productId) {
+      newCart.push(cartItem);
+    }
+  });
+
+  cart = newCart;
 }
