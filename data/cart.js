@@ -21,6 +21,8 @@ function saveToStorage() {
 
 export function addToCart(productId) {
   let matchingItem;
+
+  // Checks if product already exists.
   cart.forEach((cartItem) => {
     if (productId === cartItem.id) {
       matchingItem = cartItem;
