@@ -14,7 +14,6 @@ function renderPaymentSummary() {
     // Shipping cost.
     const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
     shippingPriceCents += deliveryOption.priceCents;
-    console.log(deliveryOption);
   });
 
   const totalBeforeTaxCents = productPriceCents + shippingPriceCents;
