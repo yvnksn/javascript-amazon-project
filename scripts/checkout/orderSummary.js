@@ -72,6 +72,7 @@ function renderOrderSummary() {
     link.addEventListener("click", (e) => {
       const { productId } = link.dataset;
       removeItemFromCart(productId);
+      renderPaymentSummary();
 
       const container = document.querySelector(
         `.js-cart-item-container-${productId}`,
