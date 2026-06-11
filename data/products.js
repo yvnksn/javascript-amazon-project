@@ -538,3 +538,24 @@ export const products = [
   }
   return new Product(product);
 });
+
+/** 
+const today = new Date();
+const deliveryDate = today.toLocaleTimeString();
+console.log(deliveryDate);
+
+this;
+
+function logThis() {
+  console.log(this);
+}
+// first arg points to this.
+logThis.call("hello world");
+
+const object3 = {
+  method: () => {
+    console.log(this);
+  },
+};
+object3.method();
+**/
