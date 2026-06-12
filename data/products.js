@@ -61,29 +61,43 @@ class Clothing extends Product {
 
 export let products = [];
 
-export function loadProducts(fun) {
-  console.log('load products')
-  let XHRresponse;
+// export function loadProducts(fun) {
+//   console.log("load products");
+//   let XHRresponse;
 
-  const XHR = new XMLHttpRequest();
+//   const XHR = new XMLHttpRequest();
 
-  XHR.addEventListener("load", () => {
-    XHRresponse = XHR.response;
-    products = JSON.parse(XHRresponse).map((productDetails) => {
-      if (productDetails.type === "clothing") {
-        return new Clothing(productDetails);
-      }
-      return new Product(productDetails);
+//   XHR.addEventListener("load", () => {
+//     XHRresponse = XHR.response;
+//     products = JSON.parse(XHRresponse).map((productDetails) => {
+//       if (productDetails.type === "clothing") {
+//         return new Clothing(productDetails);
+//       }
+//       return new Product(productDetails);
+//     });
+//     fun();
+//   });
+
+//   XHR.open("GET", "https://supersimplebackend.dev/products");
+//   XHR.send();
+// }
+
+// loadProductsFromFetch();
+
+export function loadProductsFromFetch() {
+  const promise = fetch("https://supersimplebackend.dev/products")
+    .then((response) => {
+      return response.json();
+    })
+    .then((productDetails) => {
+      products = productDetails.map((productDetails) => {
+        if (productDetails.type === "clothing") {
+          return new Clothing(productDetails);
+        }
+        return new Product(productDetails);
+      });
     });
 
-    fun();
-  });
-
-  XHR.open("GET", "https://supersimplebackend.dev/products");
-  XHR.send();
+  return promise;
 }
-
-
-const today = new Date();
-const deliveryDate = today.toLocaleTimeString();
-console.log(deliveryDate);
+loadProductsFromFetch().then(() => {});

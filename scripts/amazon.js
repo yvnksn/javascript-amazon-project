@@ -1,5 +1,5 @@
 import { cart, addToCart } from "../data/cart.js";
-import { products, loadProducts } from "../data/products.js";
+import { products, loadProductsFromFetch } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
 function renderProductsGrid() {
@@ -81,4 +81,7 @@ function renderProductsGrid() {
     });
   });
 }
-loadProducts(renderProductsGrid)
+
+loadProductsFromFetch().then(() => {
+  renderProductsGrid();
+});
