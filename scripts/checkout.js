@@ -48,13 +48,18 @@ loadProductsFromFetch().then(() => {
 */
 
 async function loadPage() {
-  await loadProductsFromFetch();
+  try {
+    await loadProductsFromFetch();
 
   const prom = await new Promise((resolve) => {
     loadCart(() => {
       resolve("closing Promise");
     });
   });
+  } catch (error) {
+    console.log('Unexpected error.Please try again later.')
+  }
+  
 
   renderOrderSummary();
   renderPaymentSummary();
