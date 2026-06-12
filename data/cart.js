@@ -19,7 +19,6 @@ export function loadFromStorage() {
       },
     ];
   }
-
 }
 
 function saveToStorage() {
@@ -73,4 +72,20 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 
   matchingItem.deliveryOptionId = deliveryOptionId;
   saveToStorage();
+}
+
+export function loadCart(fun) {
+  let XHRresponse;
+
+  const XHR = new XMLHttpRequest();
+
+  XHR.addEventListener("load", () => {
+    XHRresponse = XHR.response;
+    console.log(XHRresponse);
+
+    fun();
+  });
+
+  XHR.open("GET", "https://supersimplebackend.dev/cart");
+  XHR.send();
 }
