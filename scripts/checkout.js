@@ -27,20 +27,37 @@ new Promise((resolve) => {
 });
 */
 
-// Promise.all([
-//   loadProductsFromFetch(),
-//   new Promise((resolve) => {
-//     loadCart(() => {
-//       resolve("done.");
-//     });
-//   }),
-// ]).then((values) => {
-//   console.log(values);
-//   renderOrderSummary();
-//   renderPaymentSummary();
-// });
+/*
+await Promise.all([
+  loadProductsFromFetch(),
+  new Promise((resolve) => {
+    loadCart(() => {
+      resolve("done.");
+    });
+  }),
+]).then((values) => {
+  console.log(values);
+  renderOrderSummary();
+  renderPaymentSummary();
+});
 
 loadProductsFromFetch().then(() => {
   renderOrderSummary();
   renderPaymentSummary();
 });
+*/
+
+async function loadPage() {
+  await loadProductsFromFetch();
+
+  const prom = await new Promise((resolve) => {
+    loadCart(() => {
+      resolve("closing Promise");
+    });
+  });
+
+  renderOrderSummary();
+  renderPaymentSummary();
+}
+
+loadPage();
