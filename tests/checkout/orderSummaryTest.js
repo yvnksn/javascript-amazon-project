@@ -28,13 +28,13 @@ describe("test suite: renderOrderSummary: ", () => {
     spyOn(localStorage, "getItem").and.callFake(() => {
       return JSON.stringify([
         {
-          id: productId1,
-          qty: 2,
+          productId: productId1,
+          quantity: 2,
           deliveryOptionId: "1",
         },
         {
-          id: productId2,
-          qty: 1,
+          productId: productId2,
+          quantity: 1,
           deliveryOptionId: "2",
         },
       ]);
@@ -81,7 +81,7 @@ describe("test suite: renderOrderSummary: ", () => {
     ).not.toEqual();
 
     expect(cart.length).toEqual(1);
-    expect(cart[0].id).toEqual(productId2);
+    expect(cart[0].productId).toEqual(productId2);
   });
 });
 

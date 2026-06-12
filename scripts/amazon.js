@@ -68,7 +68,7 @@ function renderProductsGrid() {
     // Make cart qty icon interactive
     let cartQty = 0;
     cart.forEach((cartItem) => {
-      cartQty += cartItem.qty;
+      cartQty += cartItem.quantity;
     });
     document.querySelector(".js-cart-quantity").innerHTML = cartQty;
   }

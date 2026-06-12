@@ -15,7 +15,7 @@ import renderPaymentSummary from "./paymentSummary.js";
 function renderOrderSummary() {
   let cartSummaryHTML = "";
   cart.forEach((cartItem) => {
-    const productId = cartItem.id;
+    const productId = cartItem.productId;
 
     // Normalization -
     const matchingProduct = getProduct(productId);
@@ -44,7 +44,7 @@ function renderOrderSummary() {
             </div>
             <div class="product-price">${matchingProduct.getPrice()}</div>
             <div class="product-quantity js-product-quantity-${matchingProduct.id}">
-                <span> Quantity: <span class="quantity-label">${cartItem.qty}</span> </span>
+                <span> Quantity: <span class="quantity-label">${cartItem.quantity}</span> </span>
                 <span class="update-quantity-link link-primary">
                 Update
                 </span>
