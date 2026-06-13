@@ -16,18 +16,21 @@ function saveToStorage() {
 }
 
 async function loadOrders() {
-  let orderHeaderHTML = '';
-  let matchingProduct;
-  let matchingItem;
-  let matchingOrderId;
+  let orderSummaryHTML = '';
 
   await loadProductsFromFetch();
 
   orders.forEach((item) => {
+    let matchingProduct;
+    let matchingItem;
+    let matchingOrderId;
+
+    console.log(orders);
+
     const date = `${item.orderTime}`;
     const dateString = dayjs(date).format('MMMM, D');
 
-    orderHeaderHTML += `
+    orderSummaryHTML += `
   <div class="order-header">
             <div class="order-header-left-section">
               <div class="order-date">
@@ -46,10 +49,11 @@ async function loadOrders() {
             </div>
           </div>
   `;
-    document.querySelector('.js-order-container').innerHTML = orderHeaderHTML;
 
     item.products.forEach((item) => {
       matchingOrderId = item.productId;
+
+      console.log(item.quantity);
 
       products.forEach((product) => {
         if (matchingOrderId === product.id) {
@@ -58,19 +62,19 @@ async function loadOrders() {
       });
       console.log(matchingProduct);
 
-      `
+      orderSummaryHTML += `
       <div class="order-details-grid">
             <div class="product-image-container">
-              <img src="images/products/athletic-cotton-socks-6-pairs.jpg" />
+              <img src="${matchingProduct.image}" />
             </div>
 
             <div class="product-details">
               <div class="product-name">
-                Black and Gray Athletic Cotton Socks - 6 Pairs
+                ${matchingProduct.name}
               </div>
-              <div class="product-delivery-date">Arriving on: August 15</div>
-              <div class="product-quantity">Quantity: 1</div>
-              <button class="buy-again-button button-primary">
+              <div class="product-delivery-date">Arriving on: ${dayjs(item.estimatedDeliveryTime).format('MMMM D')}</div>
+              <div class="product-quantity">Quantity: ${item.quantity}</div>
+              <button class="buy-again-button button-primary js-buy-again-button">
                 <img class="buy-again-icon" src="images/icons/buy-again.png" />
                 <span class="buy-again-message">Buy it again</span>
               </button>
@@ -82,37 +86,17 @@ async function loadOrders() {
                   Track package
                 </button>
               </a>
-            </div>
-
-            <div class="product-image-container">
-              <img
-                src="images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg"
-              />
-            </div>
-
-            <div class="product-details">
-              <div class="product-name">
-                Adults Plain Cotton T-Shirt - 2 Pack
-              </div>
-              <div class="product-delivery-date">Arriving on: August 19</div>
-              <div class="product-quantity">Quantity: 2</div>
-              <button class="buy-again-button button-primary">
-                <img class="buy-again-icon" src="images/icons/buy-again.png" />
-                <span class="buy-again-message">Buy it again</span>
-              </button>
-            </div>
-
-            <div class="product-actions">
-              <a href="tracking.html?orderId=123&productid=4">
-                <button class="track-package-button button-secondary">
-                  Track package
-                </button>
-              </a>
-            </div>
-          </div>
+           </div>
+      </div>
       `;
     });
   });
-}
+  document.querySelector('.js-order-container').innerHTML = orderSummaryHTML;
 
+  document.querySelectorAll('.js-buy-again-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      window.location.href = '/checkout.html';
+    });
+  });
+}
 loadOrders();
