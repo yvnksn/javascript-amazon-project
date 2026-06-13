@@ -1,4 +1,4 @@
-import { formatCurrency } from "../scripts/utils/money.js";
+import { formatCurrency } from '../scripts/utils/money.js';
 
 export function getProduct(productId) {
   let matchingProduct;
@@ -38,7 +38,7 @@ class Product {
   }
 
   extraInfoHTML() {
-    return "";
+    return '';
   }
 }
 
@@ -89,21 +89,21 @@ export function loadProducts(fun) {
 */
 
 export function loadProductsFromFetch() {
-  const promise = fetch("https://supersimplebackend.dev/products")
+  const promise = fetch('https://supersimplebackend.dev/products')
     .then((response) => {
       return response.json();
     })
     .then((productDetails) => {
       products = productDetails.map((productDetails) => {
-        if (productDetails.type === "clothing") {
+        if (productDetails.type === 'clothing') {
           return new Clothing(productDetails);
         }
         return new Product(productDetails);
       });
-    })/*.catch((error) => {
+    }); /*.catch((error) => {
       console.log('Unexpected error. Please try again later...')
     })*/
 
   return promise;
 }
-loadProductsFromFetch()
+loadProductsFromFetch();

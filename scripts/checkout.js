@@ -1,8 +1,9 @@
-import renderOrderSummary from "./checkout/orderSummary.js";
-import renderPaymentSummary from "./checkout/paymentSummary.js";
+import renderOrderSummary from './checkout/orderSummary.js';
+import renderPaymentSummary from './checkout/paymentSummary.js';
 // import "../data/backend-practice.js";
-import { loadProductsFromFetch } from "../data/products.js";
-import { loadCart } from "../data/cart.js";
+import { loadProductsFromFetch } from '../data/products.js';
+import { loadCart } from '../data/cart.js';
+
 /** 
 loadProducts(() => {
   renderOrderSummary();
@@ -11,7 +12,7 @@ loadProducts(() => {
 **/
 
 // Use Promise to loadProducts;
-/*
+/* 
 new Promise((resolve) => {
   loadProducts();
   resolve();
@@ -25,7 +26,7 @@ new Promise((resolve) => {
     renderPaymentSummary();
   });
 });
-*/
+**/
 
 /*
 await Promise.all([
@@ -47,19 +48,17 @@ loadProductsFromFetch().then(() => {
 });
 */
 
-async function loadPage() {
-  try {
-    await loadProductsFromFetch();
+/** 
+loadProductsFromFetch(() => {
+  renderOrderSummary();
+  renderPaymentSummary();
+});
+**/
 
-  const prom = await new Promise((resolve) => {
-    loadCart(() => {
-      resolve("closing Promise");
-    });
-  });
-  } catch (error) {
-    console.log('Unexpected error.Please try again later.')
-  }
-  
+async function loadPage() {
+  console.log('async load page');
+
+  await loadProductsFromFetch();
 
   renderOrderSummary();
   renderPaymentSummary();
