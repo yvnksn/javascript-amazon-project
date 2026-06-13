@@ -74,7 +74,7 @@ function renderPaymentSummary() {
 
         console.log(response.status);
       } catch (e) {
-        console.log('Unexpected ERROR! Try again later.');
+        console.log('An unexpected error occured. Please try again later.');
       }
 
       window.location.href = 'orders.html';
