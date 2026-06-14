@@ -80,8 +80,9 @@ async function loadOrders() {
             </div>
 
             <div class="product-actions">
-              <a href="tracking.html">
-                <button class="track-package-button button-secondary">
+              <a href="tracking.html?orderId=${order.id}&productId=${matchingProduct.id}">
+                <button class="track-package-button button-secondary 
+                js-track-package-button" data-product-id=${matchingProduct.id}>
                   Track package
                 </button>
               </a>
@@ -106,6 +107,13 @@ async function loadOrders() {
       const { productId } = button.dataset;
       addToCart(productId);
       updateCartQuantity();
+    });
+  });
+
+  document.querySelectorAll('.js-track-package-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const { productId } = button.dataset;
+      console.log('test');
     });
   });
 }
