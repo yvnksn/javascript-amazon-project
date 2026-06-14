@@ -20,14 +20,14 @@ async function loadOrders() {
 
   await loadProductsFromFetch();
 
-  orders.forEach((item) => {
+  orders.forEach((order) => {
     let matchingProduct;
     let matchingItem;
     let matchingOrderId;
 
     console.log(orders);
 
-    const date = `${item.orderTime}`;
+    const date = `${order.orderTime}`;
     const dateString = dayjs(date).format('MMMM, D');
 
     orderSummaryHTML += `
@@ -39,21 +39,19 @@ async function loadOrders() {
               </div>
               <div class="order-total">
                 <div class="order-header-label">Total:</div>
-                <div>$${formatCurrency(item.totalCostCents)}</div>
+                <div>$${formatCurrency(order.totalCostCents)}</div>
               </div>
             </div>
 
             <div class="order-header-right-section">
               <div class="order-header-label">Order ID:</div>
-              <div>${item.id}</div>
+              <div>${order.id}</div>
             </div>
           </div>
   `;
 
-    item.products.forEach((item) => {
-      matchingOrderId = item.productId;
-
-      console.log(item.quantity);
+    order.products.forEach((productItem) => {
+      matchingOrderId = productItem.productId;
 
       products.forEach((product) => {
         if (matchingOrderId === product.id) {
@@ -72,8 +70,8 @@ async function loadOrders() {
               <div class="product-name">
                 ${matchingProduct.name}
               </div>
-              <div class="product-delivery-date">Arriving on: ${dayjs(item.estimatedDeliveryTime).format('MMMM D')}</div>
-              <div class="product-quantity">Quantity: ${item.quantity}</div>
+              <div class="product-delivery-date">Arriving on: ${dayjs(productItem.estimatedDeliveryTime).format('MMMM D')}</div>
+              <div class="product-quantity">Quantity: ${productItem.quantity}</div>
               <button class="buy-again-button button-primary js-buy-again-button">
                 <img class="buy-again-icon" src="images/icons/buy-again.png" />
                 <span class="buy-again-message">Buy it again</span>
