@@ -1,6 +1,6 @@
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { loadProductsFromFetch, products } from './products.js';
-import { cart } from './cart.js';
+import { addToCart, cart } from './cart.js';
 import { formatCurrency } from '../scripts/utils/money.js';
 import { deliveryOptions, getDeliveryOption } from './deliveryOptions.js';
 
@@ -16,6 +16,7 @@ function saveToStorage() {
 }
 
 async function loadOrders() {
+  updateCartQuantity();
   let orderSummaryHTML = '';
 
   await loadProductsFromFetch();
@@ -72,7 +73,7 @@ async function loadOrders() {
               </div>
               <div class="product-delivery-date">Arriving on: ${dayjs(productItem.estimatedDeliveryTime).format('MMMM D')}</div>
               <div class="product-quantity">Quantity: ${productItem.quantity}</div>
-              <button class="buy-again-button button-primary js-buy-again-button">
+              <button class="buy-again-button button-primary js-buy-again-button" data-product-id=${matchingProduct.id}>
                 <img class="buy-again-icon" src="images/icons/buy-again.png" />
                 <span class="buy-again-message">Buy it again</span>
               </button>
@@ -91,9 +92,20 @@ async function loadOrders() {
   });
   document.querySelector('.js-order-container').innerHTML = orderSummaryHTML;
 
+  function updateCartQuantity() {
+    // Make cart qty icon interactive
+    let cartQty = 0;
+    cart.forEach((cartItem) => {
+      cartQty += cartItem.quantity;
+    });
+    document.querySelector('.js-cart-quantity').innerHTML = cartQty;
+  }
+
   document.querySelectorAll('.js-buy-again-button').forEach((button) => {
     button.addEventListener('click', () => {
-      window.location.href = '/checkout.html';
+      const { productId } = button.dataset;
+      addToCart(productId);
+      updateCartQuantity();
     });
   });
 }
